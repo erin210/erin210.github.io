@@ -54,7 +54,7 @@
                     <div class="d-flex">
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"></span>
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
                         </div>
 
                         <!-- Menu -->
@@ -135,10 +135,8 @@
                         <div class="left">
                             <div class="title">
                                 <span>The History of Anthogenol®</span>
-                                <!-- <h1>Aji3k27的旅程始於 1532 年 <br>
-                                    我們很自豪地與您分享我們的故事。</h1> -->
-                                    <h1>我們的旅程始於 1532 年 <br>
-                                        我們很自豪地與您分享我們的故事。</h1>
+                                <h1>Anthogenol的旅程始於 1532 年 <br>
+                                    我們很自豪地與您分享我們的故事。</h1>
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="list">
@@ -261,53 +259,53 @@
             var inAboutYearList = false; // 在 ABOUT_YEAR_LIST 內 
             updateContent(currentIndex);
 
-            //滾動時
-            $(window).on('wheel', function (event) {
+//滾動時
+$(window).on('wheel', function (event) {
 
-                if ($(window).scrollTop() >= activationScrollY && inAboutYearList) {
-                    var scrollPosition = $(this).scrollTop();
+if ($(window).scrollTop() >= activationScrollY && inAboutYearList) {
+    var scrollPosition = $(this).scrollTop();
 
-                    if (event.originalEvent.deltaY > 0) {
-                        // SCROLL DOWN
-                        if (currentIndex < data.length - 1) {
-                            currentIndex++;
-                            var lessPosition = scrollPosition - 1;
-                            $(this).scrollTop(lessPosition);
-                            updateContent(currentIndex);
-                        }
-                    } else {
-                        // SCROLL UP
-                        if (currentIndex > 0) {
-                            currentIndex--;
-                            var morePosition = scrollPosition + 1;
-                            $(this).scrollTop(morePosition);
-                            updateContent(currentIndex);
-                        }
-                    }
+    if (event.originalEvent.deltaY > 0) {
+        // SCROLL DOWN
+        if (currentIndex < data.length - 1) {
+            currentIndex++;
+            var lessPosition = scrollPosition - 1;
+            $(this).scrollTop(lessPosition);
+            updateContent(currentIndex);
+        }
+    } else {
+        // SCROLL UP
+        if (currentIndex > 0) {
+            currentIndex--;
+            var morePosition = scrollPosition + 1;
+            $(this).scrollTop(morePosition);
+            updateContent(currentIndex);
+        }
+    }
 
 
-                }
-            });
-            //作用範圍
-            $("#ABOUT_YEAR_LIST").hover(
-                function () {
-                    inAboutYearList = true;
-                    $(window).on('wheel', preventDefaultScroll);
-                },
-                function () {
-                    inAboutYearList = false;
-                    $(window).off('wheel', preventDefaultScroll);
-                }
-            );
+}
+});
+//作用範圍
+$("#ABOUT_YEAR_LIST").hover(
+function () {
+    inAboutYearList = true;
+    $(window).on('wheel', preventDefaultScroll);
+},
+function () {
+    inAboutYearList = false;
+    $(window).off('wheel', preventDefaultScroll);
+}
+);
 
             //MMM
             $(".info").swipe({
                 swipeLeft: function () {
-                    if (currentIndex < data.length - 1) {
+                    if(currentIndex < data.length - 1){
                         currentIndex = (currentIndex + 1) % data.length;
                         updateContent(currentIndex);
                     }
-
+                    
                 },
                 swipeRight: function () {
                     if (currentIndex > 0) {
