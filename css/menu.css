@@ -58,10 +58,9 @@ ol li, ul li {
   display: flex;
   align-items: center;
   padding-left: 25px;
-  padding-top: 10px;
 }
 .classy-navbar .nav-logo img {
-  max-width: 200px;
+  max-width: 220px;
 }
 
 .cart {
@@ -782,7 +781,7 @@ ol li, ul li {
 
 @media screen and (max-width: 1200px) {
   .classy-navbar .nav-logo img {
-    max-width: 160px;
+    max-width: 180px;
   }
 }
 @media screen and (min-width: 992px) {
@@ -816,6 +815,6 @@ ol li, ul li {
     padding-left: 15px;
   }
   .classy-navbar .nav-logo img {
-    max-width: 140px;
+    max-width: 160px;
   }
 }/*# sourceMappingURL=menu.css.map */
