@@ -14,7 +14,7 @@
 }
 
 .vedio-container {
-  max-width: 1140px;
+  max-width: 70%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -139,12 +139,15 @@
   padding: 8% !important;
 }
 
+.index-product .product {
+  text-align: center;
+}
 .index-product .product .pic {
   width: 100%;
   position: relative;
   height: 0;
   overflow: hidden;
-  padding-bottom: 117%;
+  padding-bottom: 110%;
 }
 .index-product .product .pic img {
   max-width: 100%;
@@ -163,21 +166,14 @@
   -o-transition: all 0.3s ease-in-out;
 }
 .index-product .product .text {
-  text-align: center;
+  margin: 20px 0;
 }
 .index-product .product .text h4 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
   font-size: 20px;
   font-weight: 400;
-  line-height: 25px;
   letter-spacing: 2.2px;
   text-align: center;
-  height: 50px;
-  margin: 20px 0 30px 0;
+  line-height: 1.5;
 }
 .index-product .product:hover {
   cursor: pointer;
@@ -949,6 +945,14 @@ ul.tabs li.active::before {
     width: 280px;
   }
 }
+@media screen and (max-width: 1200px) {
+  .features .list .left .info h1 {
+    font-size: 45px;
+  }
+  .features .list .left .info h3 {
+    font-size: 18px;
+  }
+}
 @media screen and (max-width: 991px) {
   .features .list {
     width: 100%;
@@ -1008,6 +1012,9 @@ ul.tabs li.active::before {
   .news-list .news-right h5 {
     font-size: 14px;
   }
+  .index-product .product .text h4 {
+    font-size: 17px;
+  }
   .news-content img {
     width: 100%;
   }
@@ -1053,6 +1060,15 @@ ul.tabs li.active::before {
   }
 }
 @media screen and (max-width: 768px) {
+  #ABOUT_YEAR_LIST {
+    height: 200vw;
+  }
+  .link_post:hover {
+    color: #2690C1;
+  }
+  .vedio-container {
+    max-width: 100%;
+  }
   .btn {
     padding: 10px 35px;
     font-size: 12px;
@@ -1069,14 +1085,8 @@ ul.tabs li.active::before {
   .features .list .row .right .info p {
     font-size: 14px;
   }
-  .features .list .row .left .info h1 {
-    font-size: 46px;
-  }
-  .features .list .row .left .info h3 {
-    font-size: 18px;
-  }
   .index-product .product .text h4 {
-    font-size: 15px;
+    font-size: 14px;
   }
   a.index-blog .blogbox {
     padding: 25px;
@@ -1198,7 +1208,7 @@ ul.tabs li.active::before {
     font-size: 13px;
   }
   .page-about .info .left .title {
-    padding: 100px 5% 0 5%;
+    padding: 0 5% 0 5%;
   }
   .page-about .info .left .title h1 {
     font-size: 20px;

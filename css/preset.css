@@ -37,6 +37,7 @@ main {
 }
 
 a {
+  cursor: pointer;
   text-decoration: none;
   color: #000;
 }
@@ -301,6 +302,9 @@ p {
   transform: translateY(-50%);
   z-index: 2;
 }
+.go-top img {
+  padding-left: 2px;
+}
 .go-top span {
   color: #76716F;
   font-size: 12px;
@@ -344,6 +348,9 @@ p {
 }
 .footer .f-logo {
   padding-top: 5%;
+}
+.footer .f-logo img {
+  max-width: 220px;
 }
 .footer .f-list {
   padding-bottom: 5%;
@@ -515,7 +522,7 @@ p {
     right: 10px;
   }
   .footer .f-logo img {
-    max-width: 85px;
+    max-width: 180px;
   }
   .footer .f-info .mail span, .footer .f-info .phone span, .footer .f-info .shopee span {
     font-size: 12px;
