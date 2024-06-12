@@ -58,6 +58,7 @@ ol li, ul li {
   display: flex;
   align-items: center;
   padding-left: 25px;
+  padding-top: 10px;
 }
 .classy-navbar .nav-logo img {
   max-width: 220px;
@@ -802,8 +803,8 @@ ol li, ul li {
   }
 }
 @media screen and (max-width: 768px) {
-  .classy-navbar .nav-logo {
-    padding-top: 0;
+  .classy-navbar .nav-logo img {
+    max-width: 140px;
   }
 }
 @media screen and (max-width: 667px) {
@@ -813,8 +814,5 @@ ol li, ul li {
   }
   .classy-navbar .nav-logo {
     padding-left: 15px;
-  }
-  .classy-navbar .nav-logo img {
-    max-width: 160px;
   }
 }/*# sourceMappingURL=menu.css.map */
