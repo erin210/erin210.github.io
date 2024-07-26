@@ -41,6 +41,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <!-- 輪播 -->
     <link rel='stylesheet' href="css/swiper.min.css">
+    <script>
+        $(document).ready(function () {
+            $("header").load("./component/header_con.html");
+            $("footer").load("./component/footer_con.html");
+        });
+    </script>
 </head>
 
 <body>
@@ -374,13 +380,8 @@
     <script src="js/wow.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $("header").load("./component/header_con.html");
-            $("footer").load("./component/footer_con.html");
-
-            new WOW().init();
-
-        });
+        
+        new WOW().init();
 
         //BANNER
         var swiper = new Swiper('.swiper-banner', {
