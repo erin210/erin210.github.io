@@ -57,6 +57,7 @@
                 </div>
             </section>
         </article>
+
         <!-- faq -->
          <article class="top-alla wow fadeIn" data-wow-duration="1s" data-wow-delay="1.5s">
             <section>
@@ -280,18 +281,15 @@
     <footer class="footer wow fadeInUp" data-wow-duration="1s" ></footer>
 
     <script src='js/jquery-3.4.1.min.js'></script>
-    <!-- <script src="js/jquery-2.1.4.min.js"></script> -->
-    <!-- <script src="js/menu.js"></script> -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/menu.js"></script>
     <script src="js/all.js"></script>
     <script src="js/wow.min.js"></script>
 
     <!-- smooth scrolling -->
     <script>
-        $(document).ready(function () {
-            $("header").load("./component/header_con.html");
-            $("footer").load("./component/footer_con.html");
-            new WOW().init();
-        });
+        
+        new WOW().init();
 
         //打字動畫
         const dom = $('.h1_text');
@@ -316,7 +314,10 @@
 
         //tab切換
         $(".tab_content").hide();$(".tab_content:first").show();$("ul.tabs li").click(function(){$(".tab_content").hide();var activeTab=$(this).attr("rel");$("#"+activeTab).fadeIn();$("ul.tabs li").removeClass("active");$(this).addClass("active");$(".tab_drawer_heading").removeClass("d_active");$(".tab_drawer_heading[rel^='"+activeTab+"']").addClass("d_active")});$('ul.tabs li').last().addClass("tab_last");
-    
+    </script>
+
+    <script>
+    (function($) {
         $('.accordion > li:eq(0) .faqname').addClass('active').next().slideDown();
 
         $('.accordion .faqname').click(function(j) {
@@ -335,6 +336,10 @@
 
             j.preventDefault();
         });
+    })(jQuery);
+    
+    $("header").load("./component/header_con.html");
+    $("footer").load("./component/footer_con.html");
 </script>
 </body>
 </html>
