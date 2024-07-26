@@ -389,9 +389,6 @@ a.index-blog:hover .blogbox .imgbox img {
   padding-top: 50px;
 }
 
-.page-about {
-  padding-top: 10%;
-}
 .page-about .info {
   display: flex;
 }
@@ -1064,6 +1061,9 @@ ul.tabs li.active::before {
   .about__list-li::after {
     left: 60px !important;
   }
+  .product_card .product_card_pic {
+    padding-bottom: 100%;
+  }
 }
 @media screen and (min-width: 769px) {
   .mobile_banner {
@@ -1071,9 +1071,6 @@ ul.tabs li.active::before {
   }
 }
 @media screen and (max-width: 768px) {
-  #ABOUT_YEAR_LIST {
-    height: 200vw;
-  }
   .link_post:hover {
     color: #2690C1;
   }
@@ -1219,6 +1216,9 @@ ul.tabs li.active::before {
   }
   ul.tabs li {
     font-size: 14px;
+  }
+  .page-about {
+    padding-top: 10%;
   }
   .page-about .info .left .list li {
     margin: 10px 0;
