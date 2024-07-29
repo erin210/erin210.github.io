@@ -42,6 +42,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <!-- 輪播 -->
     <link rel='stylesheet' href="css/swiper.min.css">
+    <style>
+        .breakpoint-on .classy-navbar .classy-menu{
+            border: 1px solid rgb(30, 228, 165);
+        }
+        .breakpoint-on .classy-navbar .classy-menu .classynav ul li{
+            display: none !important;
+            
+        }
+        .breakpoint-on .classy-navbar .classy-menu.menu-on .classynav ul li{
+            display: block !important;
+            background-color: #f00;
+        }
+        @media screen and (max-width: 667px) {
+                .banner .swiper-banner{
+                    min-height: 140vw;
+                    /* border: 1px solid #f00; */
+                }
+            }
+</style>
     
 </head>
 
@@ -49,14 +68,6 @@
     <header class="header-area wow fadeInDown"></header>
     <main>
         <!-- BANNER-->
-        <style>
-            @media screen and (max-width: 667px) {
-                .banner .swiper-banner{
-                    min-height: 140vw;
-                    /* border: 1px solid #f00; */
-                }
-            }
-        </style>
         <article>
             <section>
                 <div class="pc_banner banner wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.5s">
