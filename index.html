@@ -41,10 +41,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <!-- 輪播 -->
     <link rel='stylesheet' href="css/swiper.min.css">
+    <style>
+        @media screen and (max-width: 991px){
+            .breakpoint-on .classy-navbar .classy-menu .classynav{
+                opacity: 0;
+            }
+            .breakpoint-on .classy-navbar .classy-menu.menu-on .classynav{
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <header class="header-area wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.7s"></header>
+    <header class="header-area wow fadeInDown" data-wow-offset="1" data-wow-duration="1s"></header>
     <main>
         <!-- BANNER-->
         <article>
