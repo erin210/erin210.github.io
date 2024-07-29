@@ -129,7 +129,7 @@
                 return response.json();
             })
             .then(data => {
-                var NEWSDATA = json.BlogData;
+                var NEWSDATA = data.BlogData;
 
             // 排序
             var sortedBlogData = [...NEWSDATA].sort(compareDate);
