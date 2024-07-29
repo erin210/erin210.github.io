@@ -96,7 +96,7 @@
         <!-- 形象影片 -->
         <article class="top-alla ">
             <section>
-                <div class="vedio-container wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.7s">
+                <div class="vedio-container wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.8s">
                     <video src="upload/video.mp4" width="100%" autoplay="false"
                         controls="false" muted></video>
                 </div>
@@ -378,7 +378,6 @@
     <script>
         $(document).ready(function () {
             $("header").load("./component/header_con.html");
-            $("footer").load("./component/footer_con.html");
 
             new WOW().init();
 
@@ -451,6 +450,7 @@
         }
 
         setInterval(showNextSlide, 3000);
+            $("footer").load("./component/footer_con.html");
         
         
         
