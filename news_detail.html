@@ -8,14 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Anthogenol®月光寶盒</title>
     <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-T2LGN669');</script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T2LGN669');</script>
     <!-- End Google Tag Manager -->
     <!-- SEO -->
     <meta name="author" content="VIVEVITA">
@@ -109,111 +106,99 @@
     <script src="js/wow.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("header").load("./component/header_con.html");
+        $("header").load("./component/header_con.html");
 
             new WOW().init();
-
+            
         });
 
-        //URL取參數
-        var urlParams = new URLSearchParams(window.location.search);
-        var PageID = urlParams.get('id');
-        var PageIndex = urlParams.get('index');
+            //URL取參數
+            var urlParams = new URLSearchParams(window.location.search);
+            var PageID = urlParams.get('id');
+            var PageIndex = urlParams.get('index');
 
+            $.getJSON("blog.json", function (json) {
+                var NEWSDATA = json.BlogData;
 
-        fetch('blog.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
+                // 排序
+                var sortedBlogData = [...NEWSDATA].sort(compareDate);
+                function compareDate(a, b) {
+                    let dateA = new Date(a.PostDate);
+                    let dateB = new Date(b.PostDate);
+                    return dateB - dateA;
                 }
-                return response.json();
-            })
-            .then(data => {
-                var NEWSDATA = data.BlogData;
 
-            // 排序
-            var sortedBlogData = [...NEWSDATA].sort(compareDate);
-            function compareDate(a, b) {
-                let dateA = new Date(a.PostDate);
-                let dateB = new Date(b.PostDate);
-                return dateB - dateA;
-            }
+                // 新的Array
+                var NewBlog = sortedBlogData;
+                GetBlogPost(PageIndex);
 
-            // 新的Array
-            var NewBlog = sortedBlogData;
-            GetBlogPost(PageIndex);
+                //印文章
+                function GetBlogPost(e) {
+                    const NEWS_INFO = NewBlog;
+                    const AUTHOR = NEWS_INFO[e].BlogAuthor;
+                    const CONTENT = NEWS_INFO[e].PostContent;
+                    const POST_SOURCE = `本內容由` + AUTHOR + `授權使用，非經同意不得轉載，原文連結點<a target="_blank" href="` + NEWS_INFO[e].PostURL + `">這裡</a> 。`;
+                    CONTENT.forEach(item => {
+                        if (item.type == "image") {
+                            $('#POST_INFO').append('<img src="' + item.src + '" alt="' + item.alt + '">')
+                        } else if (item.type == "text") {
+                            $('#POST_INFO').append('<p>' + item.text + '</p>');
+                        } else if (item.type == "title") {
+                            $('#POST_INFO').append('<h4>' + item.title + '</h4>');
+                        }
+                    });
 
-            //印文章
-            function GetBlogPost(e) {
-                const NEWS_INFO = NewBlog;
-                const AUTHOR = NEWS_INFO[e].BlogAuthor;
-                const CONTENT = NEWS_INFO[e].PostContent;
-                const POST_SOURCE = `本內容由` + AUTHOR + `授權使用，非經同意不得轉載，原文連結點<a target="_blank" href="` + NEWS_INFO[e].PostURL + `">這裡</a> 。`;
-                CONTENT.forEach(item => {
-                    if (item.type == "image") {
-                        $('#POST_INFO').append('<img src="' + item.src + '" alt="' + item.alt + '">')
-                    } else if (item.type == "text") {
-                        $('#POST_INFO').append('<p>' + item.text + '</p>');
-                    } else if (item.type == "title") {
-                        $('#POST_INFO').append('<h4>' + item.title + '</h4>');
+                    $('#POST_DATE').html(formatDate(NEWS_INFO[e].PostDate));
+                    $('#POST_TITLE').html(NEWS_INFO[e].PostTitle);
+                    $('#POST_SOURCE').html(POST_SOURCE);
+                    
+                    $('title').html(NEWS_INFO[e].PostTitle +' | Anthogenol®月光寶盒');
+                }
+
+                var POST_LEN = json.BlogData.length;
+                var thisINDEX = Number(PageIndex);
+
+                if (thisINDEX <= 0) {
+                    $('#PREV').addClass('arrow-active');
+                } else if (thisINDEX >= POST_LEN - 1) {
+                    $('#NEXT').addClass('arrow-active');
+                }
+
+                $('#PREV').on('click', function () {
+                    if (thisINDEX <= 0) {
+                        event.preventDefault();
+                    } else {
+                        // 設參數
+                        var postId = thisINDEX - 1;
+                        var url = 'news_detail.html?index=' + (thisINDEX - 1);
+                        $(this).removeClass('arrow-active');
+                        $(this).attr('href', url);
                     }
                 });
 
-                $('#POST_DATE').html(formatDate(NEWS_INFO[e].PostDate));
-                $('#POST_TITLE').html(NEWS_INFO[e].PostTitle);
-                $('#POST_SOURCE').html(POST_SOURCE);
+                $('#NEXT').on('click', function () {
+                    if (thisINDEX >= POST_LEN - 1) {
+                        event.preventDefault();
+                    } else {
+                        // 設參數
+                        var postId = thisINDEX + 1;
+                        var url = 'news_detail.html?index=' + (thisINDEX + 1);
+                        $(this).removeClass('arrow-active');
+                        $(this).attr('href', url);
+                    }
+                });
+            });
 
-                $('title').html(NEWS_INFO[e].PostTitle + ' | Anthogenol®月光寶盒');
+            // 格式化日期
+            function formatDate(dateString) {
+                let date = new Date(dateString);
+                let year = date.getFullYear();
+                let month = String(date.getMonth() + 1).padStart(2, '0'); 
+                let day = String(date.getDate()).padStart(2, '0');
+                return `${year}.${month}.${day}`;
             }
-
-            var POST_LEN = json.BlogData.length;
-            var thisINDEX = Number(PageIndex);
-
-            if (thisINDEX <= 0) {
-                $('#PREV').addClass('arrow-active');
-            } else if (thisINDEX >= POST_LEN - 1) {
-                $('#NEXT').addClass('arrow-active');
-            }
-
-            $('#PREV').on('click', function () {
-                if (thisINDEX <= 0) {
-                    event.preventDefault();
-                } else {
-                    // 設參數
-                    var postId = thisINDEX - 1;
-                    var url = 'news_detail.html?index=' + (thisINDEX - 1);
-                    $(this).removeClass('arrow-active');
-                    $(this).attr('href', url);
-                }
-            });
-
-            $('#NEXT').on('click', function () {
-                if (thisINDEX >= POST_LEN - 1) {
-                    event.preventDefault();
-                } else {
-                    // 設參數
-                    var postId = thisINDEX + 1;
-                    var url = 'news_detail.html?index=' + (thisINDEX + 1);
-                    $(this).removeClass('arrow-active');
-                    $(this).attr('href', url);
-                }
-            });
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
-
-
-        // 格式化日期
-        function formatDate(dateString) {
-            let date = new Date(dateString);
-            let year = date.getFullYear();
-            let month = String(date.getMonth() + 1).padStart(2, '0');
-            let day = String(date.getDate()).padStart(2, '0');
-            return `${year}.${month}.${day}`;
-        }
         $("footer").load("./component/footer_con.html");
-
+            
     </script>
 </body>
 
