@@ -43,17 +43,6 @@
     <!-- 輪播 -->
     <link rel='stylesheet' href="css/swiper.min.css">
     <style>
-        .breakpoint-on .classy-navbar .classy-menu{
-            border: 1px solid #e47e1e;
-            /* display: none !important; */
-        }
-        .breakpoint-on .classy-navbar .classy-menu .classynav{
-            
-        }
-        .breakpoint-on .classy-navbar .classy-menu.menu-on{
-            /* display: block !important; */
-            /* background-color: #f00; */
-        }
         @media screen and (max-width: 667px) {
                 .banner .swiper-banner{
                     min-height: 140vw;
@@ -65,13 +54,13 @@
 </head>
 
 <body>
-    <header class="header-area wow fadeInDown" data-wow-offset="1" data-wow-duration="0.5s" data-wow-delay="0s"></header>
+    <header class="header-area wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.5s"></header>
     <main>
         <!-- BANNER-->
         <article>
             <section>
-                <div class="pc_banner banner wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="1.2s">
-                    <div class="swiper-container swiper-banner">
+                <div class="pc_banner banner">
+                    <div class="swiper-container swiper-banner wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.7s">
                         <div class="swiper-wrapper">
                             <!-- BANNER 輪播圖建議尺寸1920*800-->
                             <!--start-->
@@ -90,7 +79,7 @@
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
-                <div class="mobile_banner banner wow fadeInDown" data-wow-offset="1" data-wow-duration="1s">
+                <div class="mobile_banner banner wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.7s">
                     <div class="swiper-container swiper-banner">
                         <div class="swiper-wrapper">
                             <!--start-->
@@ -115,7 +104,7 @@
         <!-- 形象影片 -->
         <article class="top-alla ">
             <section>
-                <div class="vedio-container wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.8s">
+                <div class="vedio-container wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s">
                     <video src="upload/video.mp4" width="100%" autoplay="false"
                         controls="false" muted></video>
                 </div>
