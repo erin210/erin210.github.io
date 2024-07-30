@@ -120,11 +120,19 @@
     <script src="js/wow.min.js"></script>
     <script src="js/jquery.touchSwipe.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("header").load("./component/header_con.html");
+        $(document).ready(function() {
+            $.get("./component/header_con.html", function(headerData) {
+                $("header").html(headerData);
+                var script = document.createElement("script");
+                script.src = "js/menu.js";
+                document.head.appendChild(script);
+            });
+
+            $.get("./component/footer_con.html", function(footerData) {
+                $("footer").html(footerData);
+            });
 
             new WOW().init();
-
         });
 
         //打字動畫
@@ -270,7 +278,6 @@
                 $('#NEXT').removeClass('arrow-active');
             }
         }
-        $("footer").load("./component/footer_con.html");
 
 
     </script>

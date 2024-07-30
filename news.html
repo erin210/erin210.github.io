@@ -86,87 +86,95 @@
     <script src="js/wow.min.js"></script>
     <script>
         $(document).ready(function () {
-        $("header").load("./component/header_con.html");
+            $.get("./component/header_con.html", function (headerData) {
+                $("header").html(headerData);
+                var script = document.createElement("script");
+                script.src = "js/menu.js";
+                document.head.appendChild(script);
+            });
+
+            $.get("./component/footer_con.html", function (footerData) {
+                $("footer").html(footerData);
+            });
 
             new WOW().init();
         });
 
-            //打字動畫
-            const dom = $('.h1_text');
-            const data = 'RECOMMEND'.split('');
+        //打字動畫
+        const dom = $('.h1_text');
+        const data = 'RECOMMEND'.split('');
 
-            let index = 0;
-            function writing(index) {
-                if (index < data.length) {
-                    dom.html(dom.html() + data[index]);
-                    setTimeout(() => writing(++index), 150);
-                }
+        let index = 0;
+        function writing(index) {
+            if (index < data.length) {
+                dom.html(dom.html() + data[index]);
+                setTimeout(() => writing(++index), 150);
             }
-            setTimeout(() => writing(index), 1000);
+        }
+        setTimeout(() => writing(index), 1000);
 
-            //ＪＳＯＮ
-            $.getJSON("blog.json", function (json) {
-                var NEWSINFO = json.BlogData;
+        //JSON
+        $.getJSON("blog.json", function (json) {
+            var NEWSINFO = json.BlogData;
 
-                // 排序
-                var sortedBlogData = [...NEWSINFO].sort(compareDate);
-                function compareDate(a, b) {
-                    let dateA = new Date(a.PostDate);
-                    let dateB = new Date(b.PostDate);
-                    return dateB - dateA;
-                }
+            // 排序
+            var sortedBlogData = [...NEWSINFO].sort(compareDate);
+            function compareDate(a, b) {
+                let dateA = new Date(a.PostDate);
+                let dateB = new Date(b.PostDate);
+                return dateB - dateA;
+            }
 
-                // 新的Array
-                var NewBlog = sortedBlogData;
+            // 新的Array
+            var NewBlog = sortedBlogData;
 
-                NewBlog.forEach((data, index) => {
+            NewBlog.forEach((data, index) => {
 
-                    var postINDEX = data.ID;
-                    var url = 'news_detail.html?index=' + index;
+                var postINDEX = data.ID;
+                var url = 'news_detail.html?index=' + index;
 
-                    // 抓所有文字
-                    var PostTXT = '';
-                    data.PostContent.forEach(function (item) {
-                        if (item.type === "text") {
-                            var post_text = item.text
-                                .replace(/<br\s*\/?>/gi, "").replace(/<a[^>]*>(.*?)<\/a>/gi, "$1");
-                            PostTXT += post_text;
-                        }
-                    });
-
-                    const LIST_HTML = `<a href="` + url + `">
-                                            <div class="news-list">
-                                                <div class="news-left">
-                                                    <img src="`+ data.BlogPicURL + `" alt="">
-                                                </div>
-                                                <div class="news-right">
-                                                    <div class="time">
-                                                        <span>`+ formatDate(data.PostDate) + `</span>
-                                                        <span>｜</span>
-                                                        <span>BLOG</span>
-                                                    </div> 
-                                                    <!--標題-->   
-                                                    <h1>`+ data.PostTitle + `</h1>
-                                                    <!--簡述--> 
-                                                    <p>`+ PostTXT + `</p>
-                                                    <h5>MORE ></h5>
-                                                </div>
-                                            </div>
-                                        </a>`;
-                    $('#BLOG_LIST').append(LIST_HTML);
-
+                // 抓所有文字
+                var PostTXT = '';
+                data.PostContent.forEach(function (item) {
+                    if (item.type === "text") {
+                        var post_text = item.text
+                            .replace(/<br\s*\/?>/gi, "").replace(/<a[^>]*>(.*?)<\/a>/gi, "$1");
+                        PostTXT += post_text;
+                    }
                 });
-            });
 
-            // 格式化日期
-            function formatDate(dateString) {
-                let date = new Date(dateString);
-                let year = date.getFullYear();
-                let month = String(date.getMonth() + 1).padStart(2, '0'); 
-                let day = String(date.getDate()).padStart(2, '0');
-                return `${year}.${month}.${day}`;
-            }
-            $("footer").load("./component/footer_con.html");
+                const LIST_HTML = `<a href="` + url + `">
+                                                <div class="news-list">
+                                                    <div class="news-left">
+                                                        <img src="`+ data.BlogPicURL + `" alt="">
+                                                    </div>
+                                                    <div class="news-right">
+                                                        <div class="time">
+                                                            <span>`+ formatDate(data.PostDate) + `</span>
+                                                            <span>｜</span>
+                                                            <span>BLOG</span>
+                                                        </div> 
+                                                        <!--標題-->   
+                                                        <h1>`+ data.PostTitle + `</h1>
+                                                        <!--簡述--> 
+                                                        <p>`+ PostTXT + `</p>
+                                                        <h5>MORE ></h5>
+                                                    </div>
+                                                </div>
+                                            </a>`;
+                $('#BLOG_LIST').append(LIST_HTML);
+
+            });
+        });
+
+        // 格式化日期
+        function formatDate(dateString) {
+            let date = new Date(dateString);
+            let year = date.getFullYear();
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let day = String(date.getDate()).padStart(2, '0');
+            return `${year}.${month}.${day}`;
+        }
     </script>
 </body>
 

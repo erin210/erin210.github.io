@@ -123,115 +123,123 @@
   <script src="js/wow.min.js"></script>
 
   <script>
-    $(document).ready(function () {
-        $("header").load("./component/header_con.html");
+    $(document).ready(function() {
+        $.get("./component/header_con.html", function(headerData) {
+            $("header").html(headerData);
+            var script = document.createElement("script");
+            script.src = "js/menu.js";
+            document.head.appendChild(script);
+        });
 
-      new WOW().init();
+        $.get("./component/footer_con.html", function(footerData) {
+            $("footer").html(footerData);
+        });
+
+        new WOW().init();
     });
 
-      //打字動畫
-      const dom = $('.h1_text');
-      const data = 'PRODUCT'.split('');
+    //打字動畫
+    const dom = $('.h1_text');
+    const data = 'PRODUCT'.split('');
 
-      let index = 0;
-      function writing(index) {
-        if (index < data.length) {
-          dom.html(dom.html() + data[index]);
-          setTimeout(() => writing(++index), 100);
-        }
+    let index = 0;
+    function writing(index) {
+      if (index < data.length) {
+        dom.html(dom.html() + data[index]);
+        setTimeout(() => writing(++index), 100);
       }
-      setTimeout(() => writing(index), 800);
+    }
+    setTimeout(() => writing(index), 800);
 
 
-      //JSON
-      $.getJSON("product.json", function (json) {
-        //URL取參數
-        var urlParams = new URLSearchParams(window.location.search);
-        var CategoryID = urlParams.get('category');//分類
-        var ProductID = urlParams.get('id');//產品編號
-        var ALLCategories = json.Categories;
-        var GET_PD_RESULT = GetCategoryID(CategoryID, ProductID);
-        var THIS_PRODUCT = ALLCategories[GET_PD_RESULT.categoryIndex].product_List[GET_PD_RESULT.productIndex];
-        var PRODUCT_C_QTY = THIS_PRODUCT.Product_Content_QTY;
+    //JSON
+    $.getJSON("product.json", function (json) {
+      //URL取參數
+      var urlParams = new URLSearchParams(window.location.search);
+      var CategoryID = urlParams.get('category');//分類
+      var ProductID = urlParams.get('id');//產品編號
+      var ALLCategories = json.Categories;
+      var GET_PD_RESULT = GetCategoryID(CategoryID, ProductID);
+      var THIS_PRODUCT = ALLCategories[GET_PD_RESULT.categoryIndex].product_List[GET_PD_RESULT.productIndex];
+      var PRODUCT_C_QTY = THIS_PRODUCT.Product_Content_QTY;
 
-        //印產品圖
-        THIS_PRODUCT.Product_IMG.forEach((item, i) => {
-          const NN = i + 1;
-          const PD_IMG_BIG = `<div class="swiper-slide easyzoom easyzoom--overlay">
-                                <a href="upload/pd` + PRODUCT_C_QTY + `-0` + NN + `.png">
-                                  <img src="upload/pd`+ PRODUCT_C_QTY + `-0` + NN + `.png" alt="" />
-                                </a>
-                              </div>`;
-          const PD_IMG_SMALL = `<div class="swiper-slide">
-                                  <img src="upload/pd` + PRODUCT_C_QTY + `-0` + NN + `.png" alt="">
-                                </div>`;
-
-          $('#PD_IMG_BIG').append(PD_IMG_BIG);
-          $('#PD_IMG_SMALL').append(PD_IMG_SMALL);
-        });
-
-        //初始化套件
-        var $easyzoom = $('.easyzoom').easyZoom();
-        var galleryThumbs = new Swiper('.gallery-thumbs', {
-          spaceBetween: 10,
-          slidesPerView: 4,
-          freeMode: true,
-          watchSlidesVisibility: true,
-          watchSlidesProgress: true,
-        });
-        var galleryTop = new Swiper('.gallery-top', {
-          spaceBetween: 10,
-          thumbs: {
-            swiper: galleryThumbs
-          }
-        });
-
-        //印產品資訊
-        var formattedPrice = THIS_PRODUCT.Product_Price.toLocaleString('zh-TW');
-        var formattedPriceOriginal = THIS_PRODUCT.Product_Original_Price.toLocaleString('zh-TW');
-        var PRODUCT_HTML = `<div class="col-12 title_line">
-                            <h4>`+ THIS_PRODUCT.Product_Brand + `</h4>
-                            <h1>`+ THIS_PRODUCT.Product_Name + `</h1>
-                            <hr>
-                          </div>
-                          <div class="col-12">
-                            `+ THIS_PRODUCT.Product_Detail + `
-                            <div class="price">
-                              <h3>`+ THIS_PRODUCT.Product_Ｃurrency + ` ` + formattedPrice + `</h3>
-                              <span>`+ THIS_PRODUCT.Product_Ｃurrency + ` ` + formattedPriceOriginal + `</span>
-                            </div>
-                            <a target="blank"
-                                href="https://shope.ee/A9pRmXJQiz">
-                                <button class="btn">立即購買></button>
+      //印產品圖
+      THIS_PRODUCT.Product_IMG.forEach((item, i) => {
+        const NN = i + 1;
+        const PD_IMG_BIG = `<div class="swiper-slide easyzoom easyzoom--overlay">
+                              <a href="upload/pd` + PRODUCT_C_QTY + `-0` + NN + `.png">
+                                <img src="upload/pd`+ PRODUCT_C_QTY + `-0` + NN + `.png" alt="" />
                               </a>
-                          </div>
-                    `;
-        $('#PRODUCT_DETAIL').html(PRODUCT_HTML);
-        $('title').html(THIS_PRODUCT.Product_Name +' | Anthogenol®月光寶盒');
+                            </div>`;
+        const PD_IMG_SMALL = `<div class="swiper-slide">
+                                <img src="upload/pd` + PRODUCT_C_QTY + `-0` + NN + `.png" alt="">
+                              </div>`;
 
-        //印說明圖
-        THIS_PRODUCT.Product_Landing_PIC.forEach((item, index) => {
-          $('#PRODUCT_LANDING').append('<img src="upload/landing0' + (index + 1) + '.jpg" alt="">');
+        $('#PD_IMG_BIG').append(PD_IMG_BIG);
+        $('#PD_IMG_SMALL').append(PD_IMG_SMALL);
+      });
 
-        });
-
-        //找對應位置
-        function GetCategoryID(cID, pID) {
-          for (let i = 0; i < json.Categories.length; i++) {
-            if (json.Categories[i].Categories_ID === cID) {
-              for (let p = 0; p < json.Categories[i].product_List.length; p++) {
-                if (json.Categories[i].product_List[p].Product_ID === pID) {
-                  return { categoryIndex: i, productIndex: p };
-                }
-              }
-              return { categoryIndex: i, productIndex: null };
-            }
-          }
-          return { categoryIndex: null, productIndex: null };
+      //初始化套件
+      var $easyzoom = $('.easyzoom').easyZoom();
+      var galleryThumbs = new Swiper('.gallery-thumbs', {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesVisibility: true,
+        watchSlidesProgress: true,
+      });
+      var galleryTop = new Swiper('.gallery-top', {
+        spaceBetween: 10,
+        thumbs: {
+          swiper: galleryThumbs
         }
+      });
+
+      //印產品資訊
+      var formattedPrice = THIS_PRODUCT.Product_Price.toLocaleString('zh-TW');
+      var formattedPriceOriginal = THIS_PRODUCT.Product_Original_Price.toLocaleString('zh-TW');
+      var PRODUCT_HTML = `<div class="col-12 title_line">
+                          <h4>`+ THIS_PRODUCT.Product_Brand + `</h4>
+                          <h1>`+ THIS_PRODUCT.Product_Name + `</h1>
+                          <hr>
+                        </div>
+                        <div class="col-12">
+                          `+ THIS_PRODUCT.Product_Detail + `
+                          <div class="price">
+                            <h3>`+ THIS_PRODUCT.Product_Ｃurrency + ` ` + formattedPrice + `</h3>
+                            <span>`+ THIS_PRODUCT.Product_Ｃurrency + ` ` + formattedPriceOriginal + `</span>
+                          </div>
+                          <a target="blank"
+                              href="https://shope.ee/A9pRmXJQiz">
+                              <button class="btn">立即購買></button>
+                            </a>
+                        </div>
+                  `;
+      $('#PRODUCT_DETAIL').html(PRODUCT_HTML);
+      $('title').html(THIS_PRODUCT.Product_Name +' | Anthogenol®月光寶盒');
+
+      //印說明圖
+      THIS_PRODUCT.Product_Landing_PIC.forEach((item, index) => {
+        $('#PRODUCT_LANDING').append('<img src="upload/landing0' + (index + 1) + '.jpg" alt="">');
 
       });
-      $("footer").load("./component/footer_con.html");
+
+      //找對應位置
+      function GetCategoryID(cID, pID) {
+        for (let i = 0; i < json.Categories.length; i++) {
+          if (json.Categories[i].Categories_ID === cID) {
+            for (let p = 0; p < json.Categories[i].product_List.length; p++) {
+              if (json.Categories[i].product_List[p].Product_ID === pID) {
+                return { categoryIndex: i, productIndex: p };
+              }
+            }
+            return { categoryIndex: i, productIndex: null };
+          }
+        }
+        return { categoryIndex: null, productIndex: null };
+      }
+
+    });
       
   </script>
 

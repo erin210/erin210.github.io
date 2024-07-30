@@ -100,91 +100,99 @@
     <script src="js/wow.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $("header").load("./component/header_con.html");
+        $(document).ready(function() {
+            $.get("./component/header_con.html", function(headerData) {
+                $("header").html(headerData);
+                var script = document.createElement("script");
+                script.src = "js/menu.js";
+                document.head.appendChild(script);
+            });
+
+            $.get("./component/footer_con.html", function(footerData) {
+                $("footer").html(footerData);
+            });
 
             new WOW().init();
         });
 
-            //打字動畫
-            const dom = $('.h1_text');
-            const data = 'PRODUCT'.split('');
+        //打字動畫
+        const dom = $('.h1_text');
+        const data = 'PRODUCT'.split('');
 
-            let index = 0;
-            function writing(index) {
-                if (index < data.length) {
-                    dom.html(dom.html() + data[index]);
-                    setTimeout(() => writing(++index), 100);
-                }
+        let index = 0;
+        function writing(index) {
+            if (index < data.length) {
+                dom.html(dom.html() + data[index]);
+                setTimeout(() => writing(++index), 100);
             }
-            setTimeout(() => writing(index), 800);
+        }
+        setTimeout(() => writing(index), 800);
 
-            //JSON
-            $.getJSON("product.json", function (json) {
-                var ALLCategories = json.Categories;
+        //JSON
+        $.getJSON("product.json", function (json) {
+            var ALLCategories = json.Categories;
 
-                ALLCategories.forEach((category, index) => {
-                    var TAB_LIST = '<li rel="tab' + (index + 1) + '" class="tabMenu" data-menu="'+ category.Categories_Name + '"><a href="">' + category.Categories_Name + '</a></li>';
+            ALLCategories.forEach((category, index) => {
+                var TAB_LIST = '<li rel="tab' + (index + 1) + '" class="tabMenu" data-menu="'+ category.Categories_Name + '"><a href="">' + category.Categories_Name + '</a></li>';
 
-                    var PRODUCT_CON = `<div id="tab` + (index + 1) + `" class="tab_products"><div class="row"></div></div>`;
+                var PRODUCT_CON = `<div id="tab` + (index + 1) + `" class="tab_products"><div class="row"></div></div>`;
 
-                    $('#menu').append(TAB_LIST);
-                    $('#TAB_PROCUCT_CON').append(PRODUCT_CON);
-                    var PRODUCT_LIST_ALL = '';
+                $('#menu').append(TAB_LIST);
+                $('#TAB_PROCUCT_CON').append(PRODUCT_CON);
+                var PRODUCT_LIST_ALL = '';
 
-                    //分類側選單
-                    category.product_List.forEach((item, i) => {
-                        var PRODUCT_LIST = `<div class="product_card col-lg-4 col-sm-6 col-12">
-                                <!-- 分類 -->
-                                <div class="product_card_cat">`+ category.Categories_Name + `</div>
-                                <a href="product_detail.html?id=`+item.Product_ID+`&category=`+category.Categories_ID+`">
-                                    <div class="product_card_pic">
-                                        <img src="`+ item.Product_Main_Img + `" alt="">
-                                    </div>
-                                    <!-- 名稱 -->
-                                    <div class="product_card_text">
-                                        <h4>`+ item.Product_Brand + `</h4>
-                                        <p>`+ item.Product_Name + `</p>
-                                    </div>
-                                </a>
-                            </div>`;
-                        PRODUCT_LIST_ALL += PRODUCT_LIST;
-                    });
-                    
-                    $('#tab' + (index + 1) + ' .row').append(PRODUCT_LIST_ALL);
-                    
-                    //印出所有商品
-                    $('#tab_all .row').append(PRODUCT_LIST_ALL);
+                //分類側選單
+                category.product_List.forEach((item, i) => {
+                    var PRODUCT_LIST = `<div class="product_card col-lg-4 col-sm-6 col-12">
+                            <!-- 分類 -->
+                            <div class="product_card_cat">`+ category.Categories_Name + `</div>
+                            <a href="product_detail.html?id=`+item.Product_ID+`&category=`+category.Categories_ID+`">
+                                <div class="product_card_pic">
+                                    <img src="`+ item.Product_Main_Img + `" alt="">
+                                </div>
+                                <!-- 名稱 -->
+                                <div class="product_card_text">
+                                    <h4>`+ item.Product_Brand + `</h4>
+                                    <p>`+ item.Product_Name + `</p>
+                                </div>
+                            </a>
+                        </div>`;
+                    PRODUCT_LIST_ALL += PRODUCT_LIST;
                 });
-
-                $('.tabMenu').on('click', function(){
-                        const MenuName=$(this).find('a').text();
-                        if(MenuName=="所有商品"){
-                            $('title').html('商品總覽 | Anthogenol®月光寶盒');
-                        }else{
-                            $('title').html(MenuName+' | Anthogenol®月光寶盒');
-                        }
-                    });
-
-                //切換分類
-                $("ul.nav__list li:first").addClass("nav__list-li");
-                $(".tab_products").hide();
-                $(".tab_products:first").show();
-
-                $("ul.nav__list li a").on("click", function (event) {
-                    event.preventDefault();
-                });
-
-                $("ul.nav__list li").on("click", function () {
-                    $(".tab_products").hide();
-
-                    var activeTab = $(this).attr("rel");
-                    $("#" + activeTab).fadeIn();
-                    $("ul.nav__list li").removeClass("nav__list-li");
-                    $(this).addClass("nav__list-li");
-                });
+                
+                $('#tab' + (index + 1) + ' .row').append(PRODUCT_LIST_ALL);
+                
+                //印出所有商品
+                $('#tab_all .row').append(PRODUCT_LIST_ALL);
             });
-            $("footer").load("./component/footer_con.html");
+
+            $('.tabMenu').on('click', function(){
+                    const MenuName=$(this).find('a').text();
+                    if(MenuName=="所有商品"){
+                        $('title').html('商品總覽 | Anthogenol®月光寶盒');
+                    }else{
+                        $('title').html(MenuName+' | Anthogenol®月光寶盒');
+                    }
+                });
+
+            //切換分類
+            $("ul.nav__list li:first").addClass("nav__list-li");
+            $(".tab_products").hide();
+            $(".tab_products:first").show();
+
+            $("ul.nav__list li a").on("click", function (event) {
+                event.preventDefault();
+            });
+
+            $("ul.nav__list li").on("click", function () {
+                $(".tab_products").hide();
+
+                var activeTab = $(this).attr("rel");
+                $("#" + activeTab).fadeIn();
+                $("ul.nav__list li").removeClass("nav__list-li");
+                $(this).addClass("nav__list-li");
+            });
+        });
     </script>
 </body>
 </html>

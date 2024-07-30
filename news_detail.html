@@ -104,99 +104,106 @@
     <script src="js/wow.min.js"></script>
     <script>
         $(document).ready(function () {
-        $("header").load("./component/header_con.html");
-
-            new WOW().init();
-            
-        });
-
-            //URL取參數
-            var urlParams = new URLSearchParams(window.location.search);
-            var PageID = urlParams.get('id');
-            var PageIndex = urlParams.get('index');
-
-            $.getJSON("blog.json", function (json) {
-                var NEWSDATA = json.BlogData;
-
-                // 排序
-                var sortedBlogData = [...NEWSDATA].sort(compareDate);
-                function compareDate(a, b) {
-                    let dateA = new Date(a.PostDate);
-                    let dateB = new Date(b.PostDate);
-                    return dateB - dateA;
-                }
-
-                // 新的Array
-                var NewBlog = sortedBlogData;
-                GetBlogPost(PageIndex);
-
-                //印文章
-                function GetBlogPost(e) {
-                    const NEWS_INFO = NewBlog;
-                    const AUTHOR = NEWS_INFO[e].BlogAuthor;
-                    const CONTENT = NEWS_INFO[e].PostContent;
-                    const POST_SOURCE = `本內容由` + AUTHOR + `授權使用，非經同意不得轉載，原文連結點<a target="_blank" href="` + NEWS_INFO[e].PostURL + `">這裡</a> 。`;
-                    CONTENT.forEach(item => {
-                        if (item.type == "image") {
-                            $('#POST_INFO').append('<img src="' + item.src + '" alt="' + item.alt + '">')
-                        } else if (item.type == "text") {
-                            $('#POST_INFO').append('<p>' + item.text + '</p>');
-                        } else if (item.type == "title") {
-                            $('#POST_INFO').append('<h4>' + item.title + '</h4>');
-                        }
-                    });
-
-                    $('#POST_DATE').html(formatDate(NEWS_INFO[e].PostDate));
-                    $('#POST_TITLE').html(NEWS_INFO[e].PostTitle);
-                    $('#POST_SOURCE').html(POST_SOURCE);
-                    
-                    $('title').html(NEWS_INFO[e].PostTitle +' | Anthogenol®月光寶盒');
-                }
-
-                var POST_LEN = json.BlogData.length;
-                var thisINDEX = Number(PageIndex);
-
-                if (thisINDEX <= 0) {
-                    $('#PREV').addClass('arrow-active');
-                } else if (thisINDEX >= POST_LEN - 1) {
-                    $('#NEXT').addClass('arrow-active');
-                }
-
-                $('#PREV').on('click', function () {
-                    if (thisINDEX <= 0) {
-                        event.preventDefault();
-                    } else {
-                        // 設參數
-                        var postId = thisINDEX - 1;
-                        var url = 'news_detail.html?index=' + (thisINDEX - 1);
-                        $(this).removeClass('arrow-active');
-                        $(this).attr('href', url);
-                    }
-                });
-
-                $('#NEXT').on('click', function () {
-                    if (thisINDEX >= POST_LEN - 1) {
-                        event.preventDefault();
-                    } else {
-                        // 設參數
-                        var postId = thisINDEX + 1;
-                        var url = 'news_detail.html?index=' + (thisINDEX + 1);
-                        $(this).removeClass('arrow-active');
-                        $(this).attr('href', url);
-                    }
-                });
+            $.get("./component/header_con.html", function (headerData) {
+                $("header").html(headerData);
+                var script = document.createElement("script");
+                script.src = "js/menu.js";
+                document.head.appendChild(script);
             });
 
-            // 格式化日期
-            function formatDate(dateString) {
-                let date = new Date(dateString);
-                let year = date.getFullYear();
-                let month = String(date.getMonth() + 1).padStart(2, '0'); 
-                let day = String(date.getDate()).padStart(2, '0');
-                return `${year}.${month}.${day}`;
+            $.get("./component/footer_con.html", function (footerData) {
+                $("footer").html(footerData);
+            });
+
+            new WOW().init();
+        });
+
+        //URL取參數
+        var urlParams = new URLSearchParams(window.location.search);
+        var PageID = urlParams.get('id');
+        var PageIndex = urlParams.get('index');
+
+        $.getJSON("blog.json", function (json) {
+            var NEWSDATA = json.BlogData;
+
+            // 排序
+            var sortedBlogData = [...NEWSDATA].sort(compareDate);
+            function compareDate(a, b) {
+                let dateA = new Date(a.PostDate);
+                let dateB = new Date(b.PostDate);
+                return dateB - dateA;
             }
-            $("footer").load("./component/footer_con.html");
-            
+
+            // 新的Array
+            var NewBlog = sortedBlogData;
+            GetBlogPost(PageIndex);
+
+            //印文章
+            function GetBlogPost(e) {
+                const NEWS_INFO = NewBlog;
+                const AUTHOR = NEWS_INFO[e].BlogAuthor;
+                const CONTENT = NEWS_INFO[e].PostContent;
+                const POST_SOURCE = `本內容由` + AUTHOR + `授權使用，非經同意不得轉載，原文連結點<a target="_blank" href="` + NEWS_INFO[e].PostURL + `">這裡</a> 。`;
+                CONTENT.forEach(item => {
+                    if (item.type == "image") {
+                        $('#POST_INFO').append('<img src="' + item.src + '" alt="' + item.alt + '">')
+                    } else if (item.type == "text") {
+                        $('#POST_INFO').append('<p>' + item.text + '</p>');
+                    } else if (item.type == "title") {
+                        $('#POST_INFO').append('<h4>' + item.title + '</h4>');
+                    }
+                });
+
+                $('#POST_DATE').html(formatDate(NEWS_INFO[e].PostDate));
+                $('#POST_TITLE').html(NEWS_INFO[e].PostTitle);
+                $('#POST_SOURCE').html(POST_SOURCE);
+
+                $('title').html(NEWS_INFO[e].PostTitle + ' | Anthogenol®月光寶盒');
+            }
+
+            var POST_LEN = json.BlogData.length;
+            var thisINDEX = Number(PageIndex);
+
+            if (thisINDEX <= 0) {
+                $('#PREV').addClass('arrow-active');
+            } else if (thisINDEX >= POST_LEN - 1) {
+                $('#NEXT').addClass('arrow-active');
+            }
+
+            $('#PREV').on('click', function () {
+                if (thisINDEX <= 0) {
+                    event.preventDefault();
+                } else {
+                    // 設參數
+                    var postId = thisINDEX - 1;
+                    var url = 'news_detail.html?index=' + (thisINDEX - 1);
+                    $(this).removeClass('arrow-active');
+                    $(this).attr('href', url);
+                }
+            });
+
+            $('#NEXT').on('click', function () {
+                if (thisINDEX >= POST_LEN - 1) {
+                    event.preventDefault();
+                } else {
+                    // 設參數
+                    var postId = thisINDEX + 1;
+                    var url = 'news_detail.html?index=' + (thisINDEX + 1);
+                    $(this).removeClass('arrow-active');
+                    $(this).attr('href', url);
+                }
+            });
+        });
+
+        // 格式化日期
+        function formatDate(dateString) {
+            let date = new Date(dateString);
+            let year = date.getFullYear();
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let day = String(date.getDate()).padStart(2, '0');
+            return `${year}.${month}.${day}`;
+        }
+
     </script>
 </body>
 
