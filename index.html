@@ -30,18 +30,18 @@
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
     <!-- css -->
-    <link rel="stylesheet" type="text/css" href="css/preset.css?v=20240731">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css?v=20240731">
-    <link rel="stylesheet" type="text/css" href="css/all.css?v=20240731">
-    <link rel="stylesheet" href="css/menu.css?v=20240731">
+    <link rel="stylesheet" type="text/css" href="css/preset.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css">
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+    <link rel="stylesheet" href="css/menu.css">
     
     <!-- 動畫 -->
-    <link rel="stylesheet" href="css/animate.min.css?v=20240731">
+    <link rel="stylesheet" href="css/animate.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <!-- 輪播 -->
-    <link rel='stylesheet' href="css/swiper.min.css?v=20240731">
+    <link rel='stylesheet' href="css/swiper.min.css">
     
     <style>
         @media screen and (max-width: 667px) {
@@ -50,11 +50,15 @@
                 }
             }
 </style>
+
     
 </head>
 
 <body>
-    <header class="header-area wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.5s"></header>
+    <header class="header-area wow fadeInDown" data-wow-offset="1" data-wow-duration="1s" data-wow-delay="0.3s">
+        
+    </header>
+    
     <main>
         <!-- BANNER-->
         <article>
@@ -376,19 +380,30 @@
 
     <footer class="footer wow fadeInUp" data-wow-duration="1s"></footer>
     
-    <script src='js/jquery-3.3.1.min.js?v=20240731'></script>
-    <script src="js/all.js?v=20240731"></script>
-    <script src='js/swiper.min.js?v=20240731'></script>
-    <script src="js/wow.min.js?v=20240731"></script>
+    <script src='js/jquery-3.4.1.min.js'></script>
+    <script src="js/menu.js"></script>
+    <script src="js/all.js"></script>
+    <script src='js/swiper.min.js'></script>
+    <script src="js/wow.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $("header").load("./component/header_con.html");
+        $(document).ready(function() {
+            $.get("./component/header_con.html", function(headerData) {
+                $("header").html(headerData);
+                // 動態加載 menu.js 文件
+                var script = document.createElement("script");
+                script.src = "js/menu.js";
+                document.head.appendChild(script);
+            });
+
+            $.get("./component/footer_con.html", function(footerData) {
+                $("footer").html(footerData);
+            });
 
             new WOW().init();
-
         });
-
+        
+            
         //BANNER
         var swiper = new Swiper('.swiper-banner', {
             pagination: {
@@ -456,8 +471,6 @@
         }
 
         setInterval(showNextSlide, 3000);
-        $("footer").load("./component/footer_con.html");
-        
         
     </script>
 
