@@ -108,8 +108,6 @@
                 document.head.appendChild(script);
             });
             
-            $("footer").load("./component/footer_con.html");
-
             new WOW().init();
         });
 
@@ -191,6 +189,8 @@
                 $(this).addClass("nav__list-li");
             });
         });
+        
+        $("footer").load("./component/footer_con.html");
     </script>
 </body>
 </html>

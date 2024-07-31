@@ -110,8 +110,6 @@
                 script.src = "js/menu.js";
                 document.head.appendChild(script);
             });
-            
-            $("footer").load("./component/footer_con.html");
 
             new WOW().init();
         });
@@ -201,6 +199,8 @@
             let day = String(date.getDate()).padStart(2, '0');
             return `${year}.${month}.${day}`;
         }
+        
+        $("footer").load("./component/footer_con.html");
 
     </script>
 </body>
