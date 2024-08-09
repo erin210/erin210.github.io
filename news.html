@@ -113,7 +113,7 @@
         $.getJSON("news.json", function (json) {
             var NEWSINFO = json.BlogData;
 
-            // 排序
+            // 排序 
             var sortedBlogData = [...NEWSINFO].sort(compareDate);
             function compareDate(a, b) {
                 let dateA = new Date(a.PostDate);
