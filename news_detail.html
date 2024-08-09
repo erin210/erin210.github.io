@@ -119,7 +119,7 @@
         var PageID = urlParams.get('id');
         var PageIndex = urlParams.get('index');
 
-        $.getJSON("blog.json", function (json) {
+        $.getJSON("news.json", function (json) {
             var NEWSDATA = json.BlogData;
 
             // 排序
@@ -135,7 +135,7 @@
             GetBlogPost(PageIndex);
 
             //印文章
-            function GetBlogPost(e) {
+            function GetBlogPost(e) { 
                 const NEWS_INFO = NewBlog;
                 const AUTHOR = NEWS_INFO[e].BlogAuthor;
                 const CONTENT = NEWS_INFO[e].PostContent;
